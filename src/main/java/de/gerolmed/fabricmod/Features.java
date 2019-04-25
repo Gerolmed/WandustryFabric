@@ -10,6 +10,7 @@ import net.minecraft.world.gen.decorator.ChanceDecoratorConfig;
 import net.minecraft.world.gen.decorator.Decorator;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.feature.FeatureConfig;
 import net.minecraft.world.gen.feature.StructureFeature;
 
 import java.util.HashMap;
@@ -54,6 +55,7 @@ public class Features {
             {
                 if(biome.getCategory() != Biome.Category.OCEAN && biome.getCategory() != Biome.Category.RIVER)
                 {
+                    //TODO read values from StructureGenerationSettings
                     biome.addStructureFeature(entry.getValue(), new DefaultFeatureConfig());
                     biome.addFeature(GenerationStep.Feature.SURFACE_STRUCTURES, Biome.configureFeature(entry.getValue(), new DefaultFeatureConfig(), Decorator.CHANCE_PASSTHROUGH, new ChanceDecoratorConfig(0)));
                 }

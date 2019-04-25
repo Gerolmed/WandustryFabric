@@ -1,4 +1,4 @@
-package de.gerolmed.fabricmod.structure.simple;
+package de.gerolmed.fabricmod.structure.temple;
 
 
 import de.gerolmed.fabricmod.ExampleMod;
@@ -19,13 +19,13 @@ import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import java.util.List;
 import java.util.Random;
 
-public class SimpleGenerator
+public class SmallRubyTempleGenerator
 {
     public static final Identifier id = new Identifier(ExampleMod.MOD_ID, "temples/ruby/small_ruby_temple");
 
     public static void addParts(StructureManager structureManager, BlockPos blockPos, BlockRotation rotation, List<StructurePiece> list_1, Random random, DefaultFeatureConfig defaultFeatureConfig)
     {
-        list_1.add(new SimpleGenerator.Piece(structureManager, id, blockPos, rotation));
+        list_1.add(new SmallRubyTempleGenerator.Piece(structureManager, id, blockPos, rotation));
     }
 
     public static class Piece extends SimpleStructurePiece
@@ -34,7 +34,7 @@ public class SimpleGenerator
         private final Identifier identifier;
 
         public Piece(StructureManager structureManager_1, CompoundTag compoundTag_1) {
-            super(Features.myStructurePieceType, compoundTag_1);
+            super(Features.getPiece("small_ruby_temple"), compoundTag_1);
 
             this.identifier = new Identifier(compoundTag_1.getString("Template"));
             this.rotation = compoundTag_1.containsKey("Rot") ? BlockRotation.valueOf(compoundTag_1.getString("Rot")) : BlockRotation.ROT_0;
@@ -44,7 +44,7 @@ public class SimpleGenerator
 
         public Piece(StructureManager structureManager, Identifier identifier, BlockPos pos, BlockRotation rotation)
         {
-            super(Features.myStructurePieceType, 0);
+            super(Features.getPiece("small_ruby_temple"), 0);
 
             this.rotation = rotation;
             this.identifier = identifier;

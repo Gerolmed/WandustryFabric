@@ -1,4 +1,4 @@
-package de.gerolmed.fabricmod.structure.simple;
+package de.gerolmed.fabricmod.structure.temple;
 
 import de.gerolmed.fabricmod.Features;
 import net.minecraft.structure.StructureManager;
@@ -14,9 +14,9 @@ import net.minecraft.world.gen.feature.StructureFeature;
 
 import java.util.Random;
 
-public class SimpleFeature extends AbstractTempleFeature<DefaultFeatureConfig>
+public class SmallRubyTempleFeature extends AbstractTempleFeature<DefaultFeatureConfig>
 {
-    public SimpleFeature()
+    public SmallRubyTempleFeature()
     {
     super(DefaultFeatureConfig::deserialize);
     }
@@ -36,7 +36,7 @@ public class SimpleFeature extends AbstractTempleFeature<DefaultFeatureConfig>
     @Override
     public String getName()
     {
-    return "my_structure";
+    return "small_ruby_temple";
     }
 
     @Override
@@ -62,14 +62,14 @@ public class SimpleFeature extends AbstractTempleFeature<DefaultFeatureConfig>
         @Override
         public void initialize(ChunkGenerator<?> chunkGenerator, StructureManager structureManager, int chunkX, int chunkZ, Biome biome)
         {
-            DefaultFeatureConfig defaultFeatureConfig = chunkGenerator.getStructureConfig(biome, Features.myFeature);
+            DefaultFeatureConfig defaultFeatureConfig = chunkGenerator.getStructureConfig(biome, Features.getFeature("small_ruby_temple"));
 
             int x = chunkX * 16;
             int z = chunkZ * 16;
 
             BlockPos startingPos = new BlockPos(x, 0, z);
             BlockRotation rotation = BlockRotation.values()[this.random.nextInt(BlockRotation.values().length)];
-            SimpleGenerator.addParts(structureManager, startingPos, rotation, this.children, this.random, defaultFeatureConfig);
+            SmallRubyTempleGenerator.addParts(structureManager, startingPos, rotation, this.children, this.random, defaultFeatureConfig);
             this.setBoundingBoxFromChildren();
         }
     }

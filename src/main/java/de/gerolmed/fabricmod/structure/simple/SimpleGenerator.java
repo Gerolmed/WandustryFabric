@@ -37,7 +37,7 @@ public class SimpleGenerator
             super(Features.myStructurePieceType, compoundTag_1);
 
             this.identifier = new Identifier(compoundTag_1.getString("Template"));
-            this.rotation = BlockRotation.ROT_0;
+            this.rotation = compoundTag_1.containsKey("Rot") ? BlockRotation.valueOf(compoundTag_1.getString("Rot")) : BlockRotation.ROT_0;
 
             this.setStructureData(structureManager_1);
         }

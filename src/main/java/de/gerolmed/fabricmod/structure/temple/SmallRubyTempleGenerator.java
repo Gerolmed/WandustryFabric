@@ -57,9 +57,6 @@ public class SmallRubyTempleGenerator
         {
             Structure structure_1 = structureManager.getStructureOrBlank(this.identifier);
 
-            System.out.println(structure_1.getSize().getX() + " " + structure_1.getSize().getY() + " " + structure_1.getSize().getZ());
-
-
             StructurePlacementData structurePlacementData_1 = (new StructurePlacementData()).setRotation(this.rotation).setMirrored(BlockMirror.NONE).setPosition(pos).addProcessor(BlockIgnoreStructureProcessor.IGNORE_STRUCTURE_BLOCKS);
             this.setStructureData(structure_1, this.pos, structurePlacementData_1);
         }

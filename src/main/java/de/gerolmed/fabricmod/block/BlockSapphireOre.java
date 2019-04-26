@@ -12,7 +12,7 @@ import net.minecraft.world.BlockView;
 public class BlockSapphireOre extends BasicBlock {
     public BlockSapphireOre() {
         super("block_sapphire_ore",
-                FabricBlockSettings.of(Material.METAL).lightLevel(4).build(),
+                FabricBlockSettings.of(Material.METAL).build(),
                 new Item.Settings().itemGroup(CreativeTabs.BASE_GROUP));
     }
 

@@ -15,7 +15,7 @@ import net.minecraft.world.BlockView;
 public class BlockRubyOre extends BasicBlock {
     public BlockRubyOre() {
         super("block_ruby_ore",
-                FabricBlockSettings.of(Material.METAL).lightLevel(4).build(),
+                FabricBlockSettings.of(Material.METAL).build(),
                 new Item.Settings().itemGroup(CreativeTabs.BASE_GROUP));
     }
 

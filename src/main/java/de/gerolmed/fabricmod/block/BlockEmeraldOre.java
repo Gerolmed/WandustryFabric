@@ -15,7 +15,7 @@ import net.minecraft.world.BlockView;
 public class BlockEmeraldOre extends BasicBlock {
     public BlockEmeraldOre() {
         super("block_emerald_ore",
-                FabricBlockSettings.of(Material.METAL).lightLevel(4).build(),
+                FabricBlockSettings.of(Material.METAL).build(),
                 new Item.Settings().itemGroup(CreativeTabs.BASE_GROUP));
     }
 
@@ -32,4 +32,6 @@ public class BlockEmeraldOre extends BasicBlock {
     public BlockRenderLayer getRenderLayer() {
         return BlockRenderLayer.SOLID;
     }
+
+
 }

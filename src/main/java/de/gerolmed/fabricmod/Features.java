@@ -1,10 +1,7 @@
 package de.gerolmed.fabricmod;
 
 import de.gerolmed.fabricmod.structure.base.StructureGenerationSettings;
-import de.gerolmed.fabricmod.structure.temple.SmallRubyTempleFeature;
-import de.gerolmed.fabricmod.structure.temple.SmallRubyTempleGenerator;
-import de.gerolmed.fabricmod.structure.temple.SmallSapphireTempleFeature;
-import de.gerolmed.fabricmod.structure.temple.SmallSapphireTempleGenerator;
+import de.gerolmed.fabricmod.structure.temple.*;
 import net.minecraft.structure.StructurePieceType;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.biome.Biome;
@@ -33,12 +30,16 @@ public class Features {
                 SmallRubyTempleGenerator.Piece::new));
         pieces.put("small_sapphire_temple", Registry.register(Registry.STRUCTURE_PIECE, "small_sapphire_temple",
                 SmallSapphireTempleGenerator.Piece::new));
+        pieces.put("small_emerald_temple", Registry.register(Registry.STRUCTURE_PIECE, "small_emerald_temple",
+                SmallEmeraldTempleGenerator.Piece::new));
 
         //Register features
         features.put("small_ruby_temple", Registry.register(Registry.FEATURE, "small_ruby_temple",
                 new SmallRubyTempleFeature()));
         features.put("small_sapphire_temple", Registry.register(Registry.FEATURE, "small_sapphire_temple",
                 new SmallSapphireTempleFeature()));
+        features.put("small_emerald_temple", Registry.register(Registry.FEATURE, "small_emerald_temple",
+                new SmallEmeraldTempleFeature()));
 
 
         //Register structures
@@ -46,13 +47,17 @@ public class Features {
                 getFeature("small_ruby_temple")));
         structures.put("small_sapphire_temple",  Registry.register(Registry.STRUCTURE_FEATURE, "small_sapphire_temple",
                 getFeature("small_sapphire_temple")));
-
+        structures.put("small_emerald_temple",  Registry.register(Registry.STRUCTURE_FEATURE, "small_emerald_temple",
+                getFeature("small_emerald_temple")));
 
         //Add settings
         settings.put("small_ruby_temple", new StructureGenerationSettings(GenerationStep.Feature.SURFACE_STRUCTURES,
                 25,Category.MUSHROOM, Category.JUNGLE, Category.FOREST, Category.TAIGA));
         settings.put("small_sapphire_temple", new StructureGenerationSettings(GenerationStep.Feature.SURFACE_STRUCTURES,
                 45,Category.OCEAN, Category.RIVER, Category.ICY));
+        settings.put("small_emerald_temple", new StructureGenerationSettings(GenerationStep.Feature.UNDERGROUND_STRUCTURES,
+                5, Category.SWAMP, Category.ICY, Category.RIVER, Category.TAIGA, Category.FOREST, Category.JUNGLE,
+                Category.MUSHROOM, Category.DESERT, Category.EXTREME_HILLS, Category.MESA, Category.PLAINS, Category.SAVANNA));
 
     }
 

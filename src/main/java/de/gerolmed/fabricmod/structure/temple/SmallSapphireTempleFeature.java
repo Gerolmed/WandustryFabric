@@ -14,9 +14,9 @@ import net.minecraft.world.gen.feature.StructureFeature;
 
 import java.util.Random;
 
-public class SmallRubyTempleFeature extends AbstractTempleFeature<DefaultFeatureConfig>
+public class SmallSapphireTempleFeature extends AbstractTempleFeature<DefaultFeatureConfig>
 {
-    public SmallRubyTempleFeature()
+    public SmallSapphireTempleFeature()
     {
     super(DefaultFeatureConfig::deserialize);
     }
@@ -36,7 +36,7 @@ public class SmallRubyTempleFeature extends AbstractTempleFeature<DefaultFeature
     @Override
     public String getName()
     {
-    return "small_ruby_temple";
+    return "small_sapphire_temple";
     }
 
     @Override
@@ -62,14 +62,14 @@ public class SmallRubyTempleFeature extends AbstractTempleFeature<DefaultFeature
         @Override
         public void initialize(ChunkGenerator<?> chunkGenerator, StructureManager structureManager, int chunkX, int chunkZ, Biome biome)
         {
-            DefaultFeatureConfig defaultFeatureConfig = chunkGenerator.getStructureConfig(biome, Features.getFeature("small_ruby_temple"));
+            DefaultFeatureConfig defaultFeatureConfig = chunkGenerator.getStructureConfig(biome, Features.getFeature("small_sapphire_temple"));
 
             int x = chunkX * 16;
             int z = chunkZ * 16;
 
             BlockPos startingPos = new BlockPos(x, 0, z);
             BlockRotation rotation = BlockRotation.values()[this.random.nextInt(BlockRotation.values().length)];
-            SmallRubyTempleGenerator.addParts(structureManager, startingPos, rotation, this.children, this.random, defaultFeatureConfig);
+            SmallSapphireTempleGenerator.addParts(structureManager, startingPos, rotation, this.children, this.random, defaultFeatureConfig);
             this.setBoundingBoxFromChildren();
         }
     }

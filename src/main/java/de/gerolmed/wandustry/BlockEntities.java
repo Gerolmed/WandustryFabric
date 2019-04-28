@@ -10,7 +10,7 @@ public class BlockEntities {
     public static final BlockEntityType<EnchanterBlockEntity> ENCHANTER = create("enchanter", BlockEntityType.Builder.create(EnchanterBlockEntity::new));
 
     @SuppressWarnings("unchecked")
-    private static <T extends net.minecraft.block.entity.BlockEntity> BlockEntityType<T> create(String registryName, BlockEntityType.Builder builder) {
+    private static <T extends net.minecraft.block.entity.BlockEntity> BlockEntityType<T> create(String registryName, BlockEntityType.Builder<T> builder) {
 
         return Registry.register(Registry.BLOCK_ENTITY, new Identifier(WandustryMod.MOD_ID, registryName), builder.build(null));
     }

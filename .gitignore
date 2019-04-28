@@ -5,6 +5,8 @@ build/
 out/
 classes/
 
+target/
+
 # idea
 
 .idea/

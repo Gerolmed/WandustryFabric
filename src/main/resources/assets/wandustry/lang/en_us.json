@@ -1,11 +1,13 @@
 {
-  "block.modid.block_test": "Test Block",
-  "block.modid.block_ruby_ore": "Ruby Ore",
-  "block.modid.block_sapphire_ore": "Sapphire Ore",
-  "block.modid.block_emerald_ore": "Emerald Ore",
+  "block.wandustry.block_test": "Test Block",
+  "block.wandustry.block_ruby_ore": "Ruby Ore",
+  "block.wandustry.block_sapphire_ore": "Sapphire Ore",
+  "block.wandustry.block_emerald_ore": "Emerald Ore",
+  "block.wandustry.block_enchanter": "Enchanter",
 
 
-  "item.modid.item_test": "Test Item",
 
-  "itemGroup.modid.base": "Base Tab"
+  "item.wandustry.item_test": "Test Item",
+
+  "itemGroup.wandustry.base": "Base Tab"
 }

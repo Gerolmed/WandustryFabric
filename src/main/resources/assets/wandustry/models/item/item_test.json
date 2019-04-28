@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "modid:item/item_test"
+    "layer0": "wandustry:item/item_test"
   }
 }

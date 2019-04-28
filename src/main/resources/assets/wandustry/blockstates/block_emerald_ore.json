@@ -1,5 +1,5 @@
 {
   "variants": {
-    "": { "model": "modid:block/block_emerald_ore" }
+    "": { "model": "wandustry:block/block_emerald_ore" }
   }
 }

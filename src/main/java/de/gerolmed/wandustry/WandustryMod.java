@@ -3,6 +3,7 @@ package de.gerolmed.wandustry;
 import de.gerolmed.wandustry.block.BasicBlock;
 import de.gerolmed.wandustry.item.BasicItem;
 import net.fabricmc.api.ModInitializer;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;

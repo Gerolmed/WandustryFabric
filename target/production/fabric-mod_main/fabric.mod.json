@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "modid",
+  "id": "wandustry",
   "version": "${version}",
 
   "name": "Wandustry",
@@ -14,16 +14,16 @@
   },
 
   "license": "CC0-1.0",
-  "icon": "assets/modid/icon.png",
+  "icon": "assets/wandustry/icon.png",
 
   "environment": "*",
   "entrypoints": {
     "main": [
-      "de.gerolmed.fabricmod.ExampleMod"
+      "de.gerolmed.wandustry.WandustryMod"
     ]
   },
   "mixins": [
-    "modid.mixins.json"
+    "wandustry.mixins.json"
   ],
 
   "requires": {

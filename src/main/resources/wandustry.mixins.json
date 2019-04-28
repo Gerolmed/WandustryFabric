@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "package": "de.gerolmed.wandustry.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+  ],
+  "client": [
+    "WandustryMixin",
+    "ChunkRendererMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

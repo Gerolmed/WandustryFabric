@@ -1,17 +1,27 @@
 package de.gerolmed.wandustry;
 
 import de.gerolmed.wandustry.block.entity.EnchanterBlockEntity;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class BlockEntities {
 
-    public static final BlockEntityType<EnchanterBlockEntity> ENCHANTER = create("enchanter", BlockEntityType.Builder.create(EnchanterBlockEntity::new));
+    private static final Logger LOGGER = LogManager.getLogger(BlockEntities.class);
 
-    @SuppressWarnings("unchecked")
-    private static <T extends net.minecraft.block.entity.BlockEntity> BlockEntityType<T> create(String registryName, BlockEntityType.Builder<T> builder) {
+    public static final BlockEntityType<EnchanterBlockEntity> ENCHANTER = BlockEntityType.Builder.create(EnchanterBlockEntity::new).build(null);
 
-        return Registry.register(Registry.BLOCK_ENTITY, new Identifier(WandustryMod.MOD_ID, registryName), builder.build(null));
+    public static void register(){
+        LOGGER.info("Starting to register all BlockEntities");
+        register("enchanter", ENCHANTER);
+    }
+
+    private static void register(String registryName, BlockEntityType<? extends BlockEntity> type) {
+        Registry.register(Registry.BLOCK_ENTITY, new Identifier(WandustryMod.MOD_ID, registryName), type);
+        LOGGER.info("Registering block entity {}", registryName);
+
     }
 }

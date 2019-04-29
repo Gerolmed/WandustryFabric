@@ -13,6 +13,7 @@ public class EnchanterBlockEntity extends BasicBlockEntity {
 
     public EnchanterBlockEntity() {
         super(BlockEntities.ENCHANTER);
+        itemStacks = new ArrayList<>();
     }
 
     @Override

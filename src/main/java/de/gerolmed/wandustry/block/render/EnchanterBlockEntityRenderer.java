@@ -49,7 +49,7 @@ public class EnchanterBlockEntityRenderer extends BlockEntityRenderer<EnchanterB
 
     }
 
-    public RenderPosition[] getRenders(int total) {
+    private RenderPosition[] getRenders(int total) {
         switch (total) {
             case 1: return new RenderPosition[] {new RenderPosition(0,0,0, 45)};
             case 2: return new RenderPosition[] {
@@ -68,11 +68,11 @@ public class EnchanterBlockEntityRenderer extends BlockEntityRenderer<EnchanterB
                     new RenderPosition(0.3,0,0.3, 45)
             };
             case 5: return new RenderPosition[] {
-                    new RenderPosition(0,0,1*0.3, 0),
-                    new RenderPosition(-0.95*0.3,0,0.31*0.3, 45),
-                    new RenderPosition(-0.59*0.3,0,-0.81*0.3, 45),
-                    new RenderPosition(0.59*0.3,0,-0.81*0.3, 45),
-                    new RenderPosition(0.95*0.3,0,0.31*0.3, 45)
+                    new RenderPosition(0,0,1*0.3, 0),// TOP
+                    new RenderPosition(-0.95*0.3,0,0.31*0.3, 35),// UP LEFT
+                    new RenderPosition(-0.59*0.3,0,-0.81*0.3, 45),// DOWN LEFT
+                    new RenderPosition(0.59*0.3,0,-0.81*0.3, 45),//DOWN RIGHT
+                    new RenderPosition(0.95*0.3,0,0.31*0.3, 55)//UP RIGHT
             };
             default: return new RenderPosition[0];
         }

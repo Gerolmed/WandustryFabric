@@ -6,6 +6,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.GuiLighting;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.model.json.ModelTransformation;
+import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import org.apache.logging.log4j.LogManager;
@@ -21,6 +22,8 @@ public class EnchanterBlockEntityRenderer extends BlockEntityRenderer<EnchanterB
         GlStateManager.pushMatrix();
 
         BlockPos blockPos = enchanter.getPos();
+        Vector3f vector3f = new Vector3f(blockPos.getX(),blockPos.getY(),blockPos.getZ());
+        vector3f.subtract(new Vector3f((float) renderX, (float) renderY, (float) renderZ));
 
         GuiLighting.enable();
 
@@ -34,10 +37,8 @@ public class EnchanterBlockEntityRenderer extends BlockEntityRenderer<EnchanterB
             if(positions.length <= itemNum)
                 break;
 
-            LOGGER.info(blockPos.getX() + " " + blockPos.getY() + " " + blockPos.getZ());
-
             RenderPosition position = positions[itemNum];
-            GlStateManager.translated(blockPos.getX() + .5 + position.offsetX, blockPos.getY() + 0.02 + position.offsetY, blockPos.getZ() + .5 + position.offsetZ);
+            GlStateManager.translated(vector3f.x() + .5 + position.offsetX, vector3f.y() + 0.02 + position.offsetY, vector3f.z() + .5 + position.offsetZ);
             GlStateManager.rotated(position.rot, 0,1,0);
             GlStateManager.scaled(0.7, 0.7, 0.7);
             MinecraftClient.getInstance().getItemRenderer().renderItem(itemStack, ModelTransformation.Type.GROUND);

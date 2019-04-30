@@ -19,16 +19,6 @@ public class EnchanterBlockEntityRenderer extends BlockEntityRenderer<EnchanterB
     @Override
     public void render(EnchanterBlockEntity enchanter, double renderX, double renderY, double renderZ, float float_1, int int_1) {
         super.render(enchanter, renderX, renderY, renderZ, float_1, int_1);
-        GlStateManager.pushMatrix();
-
-        BlockPos blockPos = enchanter.getPos();
-        Vector3f vector3f = new Vector3f(blockPos.getX(),blockPos.getY(),blockPos.getZ());
-        vector3f.subtract(new Vector3f((float) renderX, (float) renderY, (float) renderZ));
-
-        GuiLighting.enable();
-
-        GlStateManager.enableLighting();
-        GlStateManager.disableRescaleNormal();
 
         int itemNum = 0;
         RenderPosition[] positions = getRenders(enchanter.getItemStacks().size());
@@ -37,22 +27,25 @@ public class EnchanterBlockEntityRenderer extends BlockEntityRenderer<EnchanterB
             if(positions.length <= itemNum)
                 break;
 
-            LOGGER.info("x: " + (vector3f.x()+renderX)+", y: " + (vector3f.y()+renderY)+", z: " + (vector3f.z()+renderZ));
+            GlStateManager.pushMatrix();
+
+            GuiLighting.enable();
+
+            GlStateManager.enableLighting();
+            GlStateManager.disableRescaleNormal();
 
             RenderPosition position = positions[itemNum];
-            //GlStateManager.translated(vector3f.x() + .5 + position.offsetX, vector3f.y() + 0.02 + position.offsetY, vector3f.z() + .5 + position.offsetZ);
-            GlStateManager.translated(renderX, renderY-0.1*itemNum, renderZ);
+
+            GlStateManager.translated(renderX + .5 + position.offsetX, renderY + 0.02 + position.offsetY, renderZ + .5 + position.offsetZ);
             GlStateManager.rotated(position.rot, 0,1,0);
             GlStateManager.scaled(0.7, 0.7, 0.7);
-            MinecraftClient.getInstance().getItemRenderer().renderItem(itemStack, ModelTransformation.Type.GROUND);
 
-            GlStateManager.translated(-renderX, renderY+0.1*itemNum, -renderZ);
-            GlStateManager.scaled(10/7, 10/7, 10/7);
+            MinecraftClient.getInstance().getItemRenderer().renderItem(itemStack, ModelTransformation.Type.GROUND);
+            GlStateManager.popMatrix();
 
             itemNum++;
         }
 
-        GlStateManager.popMatrix();
 
     }
 
@@ -64,9 +57,15 @@ public class EnchanterBlockEntityRenderer extends BlockEntityRenderer<EnchanterB
                     new RenderPosition(-0.3,0,-0.3, 45)
             };
             case 3: return new RenderPosition[] {
-                    new RenderPosition(-0.5,0,-0.433, 45),
-                    new RenderPosition(0.5,0,-0.433, 45),
-                    new RenderPosition(0,0,0.433, 45)
+                    new RenderPosition(-0.5*0.6,0,-0.433*0.6, 45),
+                    new RenderPosition(0.5*0.6,0,-0.433*0.6, 45),
+                    new RenderPosition(0,0,0.433*0.6, 0)
+            };
+            case 4: return new RenderPosition[] {
+                    new RenderPosition(0.3,0,-0.3, 45),
+                    new RenderPosition(-0.3,0,-0.3, 45),
+                    new RenderPosition(-0.3,0,0.3, 45),
+                    new RenderPosition(0.3,0,0.3, 45)
             };
             default: return new RenderPosition[0];
         }

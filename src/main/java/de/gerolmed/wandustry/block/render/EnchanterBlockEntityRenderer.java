@@ -68,11 +68,11 @@ public class EnchanterBlockEntityRenderer extends BlockEntityRenderer<EnchanterB
                     new RenderPosition(0.3,0,0.3, 45)
             };
             case 5: return new RenderPosition[] {
-                    new RenderPosition(0,0,1, 45),
-                    new RenderPosition(-0.95,0,0.31, 45),
-                    new RenderPosition(-0.59,0,-0.81, 45),
-                    new RenderPosition(0.59,0,-0.81, 45),
-                    new RenderPosition(0.95,0,0.31, 45)
+                    new RenderPosition(0,0,1*0.3, 0),
+                    new RenderPosition(-0.95*0.3,0,0.31*0.3, 45),
+                    new RenderPosition(-0.59*0.3,0,-0.81*0.3, 45),
+                    new RenderPosition(0.59*0.3,0,-0.81*0.3, 45),
+                    new RenderPosition(0.95*0.3,0,0.31*0.3, 45)
             };
             default: return new RenderPosition[0];
         }

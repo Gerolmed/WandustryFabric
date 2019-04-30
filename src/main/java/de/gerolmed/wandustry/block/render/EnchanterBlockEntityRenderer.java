@@ -37,11 +37,18 @@ public class EnchanterBlockEntityRenderer extends BlockEntityRenderer<EnchanterB
             if(positions.length <= itemNum)
                 break;
 
+            LOGGER.info("x: " + (vector3f.x()+renderX)+", y: " + (vector3f.y()+renderY)+", z: " + (vector3f.z()+renderZ));
+
             RenderPosition position = positions[itemNum];
-            GlStateManager.translated(vector3f.x() + .5 + position.offsetX, vector3f.y() + 0.02 + position.offsetY, vector3f.z() + .5 + position.offsetZ);
+            //GlStateManager.translated(vector3f.x() + .5 + position.offsetX, vector3f.y() + 0.02 + position.offsetY, vector3f.z() + .5 + position.offsetZ);
+            GlStateManager.translated(renderX, renderY-0.1*itemNum, renderZ);
             GlStateManager.rotated(position.rot, 0,1,0);
             GlStateManager.scaled(0.7, 0.7, 0.7);
             MinecraftClient.getInstance().getItemRenderer().renderItem(itemStack, ModelTransformation.Type.GROUND);
+
+            GlStateManager.translated(-renderX, renderY+0.1*itemNum, -renderZ);
+            GlStateManager.scaled(10/7, 10/7, 10/7);
+
             itemNum++;
         }
 

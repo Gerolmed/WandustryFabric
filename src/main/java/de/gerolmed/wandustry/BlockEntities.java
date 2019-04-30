@@ -1,8 +1,11 @@
 package de.gerolmed.wandustry;
 
 import de.gerolmed.wandustry.block.entity.EnchanterBlockEntity;
+import de.gerolmed.wandustry.block.render.EnchanterBlockEntityRenderer;
+import net.fabricmc.fabric.api.client.render.BlockEntityRendererRegistry;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import org.apache.logging.log4j.LogManager;
@@ -16,11 +19,13 @@ public class BlockEntities {
 
     public static void register(){
         LOGGER.info("Starting to register all BlockEntities");
-        register("enchanter", ENCHANTER);
+        register("enchanter", ENCHANTER, EnchanterBlockEntity.class, new EnchanterBlockEntityRenderer());
     }
 
-    private static void register(String registryName, BlockEntityType<? extends BlockEntity> type) {
+    private static <T extends BlockEntity> void register(String registryName, BlockEntityType<T> type, Class<T> clazz, BlockEntityRenderer<T> renderer) {
         Registry.register(Registry.BLOCK_ENTITY, new Identifier(WandustryMod.MOD_ID, registryName), type);
+        BlockEntityRendererRegistry.INSTANCE.register( clazz, renderer);
+
         LOGGER.info("Registering block entity {}", registryName);
 
     }

@@ -2,6 +2,8 @@ package de.gerolmed.wandustry.block;
 
 import de.gerolmed.wandustry.CreativeTabs;
 import de.gerolmed.wandustry.block.entity.EnchanterBlockEntity;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;

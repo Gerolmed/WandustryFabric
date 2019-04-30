@@ -1,15 +1,20 @@
 package de.gerolmed.wandustry.block.entity;
 
 import de.gerolmed.wandustry.BlockEntities;
+import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
+import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.Tickable;
 
 import java.util.ArrayList;
 
-public class EnchanterBlockEntity extends BasicBlockEntity {
+public class EnchanterBlockEntity extends BasicBlockEntity implements BlockEntityClientSerializable, Tickable {
 
     private ArrayList<ItemStack> itemStacks;
     private final int SLOT_COUNT = 5;
+    private boolean ready = true;
+    private int ticker = 0, tickerReset = 10;
 
     public EnchanterBlockEntity() {
         super(BlockEntities.ENCHANTER);
@@ -48,6 +53,11 @@ public class EnchanterBlockEntity extends BasicBlockEntity {
      */
     public boolean addItemStack(ItemStack itemStack) {
 
+        if(!ready)
+            return false;
+        ready = false;
+        ticker = tickerReset;
+
         if(itemStacks.size()>= SLOT_COUNT)
             return false;
 
@@ -56,12 +66,23 @@ public class EnchanterBlockEntity extends BasicBlockEntity {
 
     @SuppressWarnings("unchecked")
     public ArrayList<ItemStack> clearAllItems() {
+        if(!ready)
+            return new ArrayList<>();
+        ready = false;
+        ticker = tickerReset;
+
         ArrayList<ItemStack> items = (ArrayList<ItemStack>) itemStacks.clone();
         itemStacks.clear();
         return items;
     }
 
     public ItemStack clearLastItem() {
+
+        if(!ready)
+            return null;
+        ready = false;
+        ticker = tickerReset;
+
         ItemStack last = null;
 
         if(itemStacks.size() > 0) {
@@ -70,5 +91,29 @@ public class EnchanterBlockEntity extends BasicBlockEntity {
         }
 
         return last;
+    }
+
+
+    @Override
+    public void fromClientTag(CompoundTag compoundTag) {
+        this.fromTag(compoundTag);
+    }
+
+    @Override
+    public CompoundTag toClientTag(CompoundTag compoundTag) {
+        return this.toTag(compoundTag);
+    }
+
+    @Override
+    public void tick() {
+        if(ready)
+            return;
+        ticker--;
+        if(ticker <= 0)
+            ready = true;
+    }
+
+    public ArrayList<ItemStack> getItemStacks() {
+        return itemStacks;
     }
 }

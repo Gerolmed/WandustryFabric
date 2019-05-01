@@ -73,7 +73,7 @@ public class EnchanterBlockEntity extends BasicBlockEntity implements BlockEntit
         hasPower = compoundTag_1.getBoolean("hasPower");
         isEnchanting = compoundTag_1.getBoolean("isEnchanting");
         enchantmentTime = compoundTag_1.getInt("enchantmentTime");
-        LOGGER.info("Loaded: ");
+        LOGGER.info("Loaded: 4");
 
         recipe = EnchantingManager.getRecipe(itemStacks);
 

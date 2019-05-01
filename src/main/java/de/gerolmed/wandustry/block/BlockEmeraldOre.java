@@ -28,7 +28,7 @@ public class BlockEmeraldOre extends BasicBlock {
 
     @Override
     public BlockRenderLayer getRenderLayer() {
-        return BlockRenderLayer.SOLID;
+        return BlockRenderLayer.CUTOUT;
     }
 
 

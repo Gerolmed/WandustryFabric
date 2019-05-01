@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "wandustry:block/block_mana_extractor"
+    },
+    "facing=south": {
+      "model": "wandustry:block/block_mana_extractor",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "wandustry:block/block_mana_extractor",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "wandustry:block/block_mana_extractor",
+      "y": 90
+    }
+  }
+}

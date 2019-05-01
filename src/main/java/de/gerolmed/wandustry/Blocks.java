@@ -14,9 +14,10 @@ public class Blocks {
     public static final BlockEmeraldOre BLOCK_EMERALD_ORE = new BlockEmeraldOre();
     public static final BlockMagicOre BLOCK_MAGIC_ORE = new BlockMagicOre();
     public static final BlockEnchanter BLOCK_ENCHANTER = new BlockEnchanter();
+    public static final BlockManaExtractor BLOCK_MANA_EXTRACTOR = new BlockManaExtractor();
 
 
     public static BasicBlock[] values() {
-        return new BasicBlock[] {BLOCK_TEST, BLOCK_RUBY_ORE, BLOCK_SAPPHIRE_ORE, BLOCK_EMERALD_ORE, BLOCK_MAGIC_ORE, BLOCK_ENCHANTER};
+        return new BasicBlock[] {BLOCK_TEST, BLOCK_RUBY_ORE, BLOCK_SAPPHIRE_ORE, BLOCK_EMERALD_ORE, BLOCK_MAGIC_ORE, BLOCK_ENCHANTER, BLOCK_MANA_EXTRACTOR};
     }
 }

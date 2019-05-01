@@ -73,6 +73,7 @@ public class EnchanterBlockEntity extends BasicBlockEntity implements BlockEntit
         hasPower = compoundTag_1.getBoolean("hasPower");
         isEnchanting = compoundTag_1.getBoolean("isEnchanting");
         enchantmentTime = compoundTag_1.getInt("enchantmentTime");
+        LOGGER.info("Loaded: ");
 
         recipe = EnchantingManager.getRecipe(itemStacks);
 
@@ -109,6 +110,7 @@ public class EnchanterBlockEntity extends BasicBlockEntity implements BlockEntit
         recipe = EnchantingManager.getRecipe((List<ItemStack>) itemStacks.clone());
 
         isEnchanting = false;
+        LOGGER.info("Its gone!");
         enchantmentTime = 0;
         hasPower = false;
 
@@ -125,9 +127,7 @@ public class EnchanterBlockEntity extends BasicBlockEntity implements BlockEntit
 
     private void enchant() {
 
-        if(!isEnchanting) {
-            isEnchanting = true;
-        }
+        isEnchanting = true;
         enchantmentTime++;
         LOGGER.info("Magic!");
 
@@ -137,7 +137,7 @@ public class EnchanterBlockEntity extends BasicBlockEntity implements BlockEntit
         isEnchanting = false;
         itemStacks.clear();
         itemStacks.add(recipe.getResult().copy());
-        LOGGER.info("Magic!");
+        LOGGER.info("Final Magic!");
     }
 
     private int getCurrentPowerLevel() {

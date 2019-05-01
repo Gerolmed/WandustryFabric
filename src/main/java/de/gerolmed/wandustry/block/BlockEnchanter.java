@@ -84,8 +84,6 @@ public class BlockEnchanter extends BasicBlock implements BlockEntityProvider {
                 itemStack.setAmount(itemStack.getAmount()-1);
         }
 
-        System.out.println("Setting finished!");
-
         return super.activate(blockState_1, world_1, blockPos_1, playerEntity_1, hand_1, blockHitResult_1);
     }
 }

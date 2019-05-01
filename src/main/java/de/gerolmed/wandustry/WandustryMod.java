@@ -1,10 +1,13 @@
 package de.gerolmed.wandustry;
 
 import de.gerolmed.wandustry.block.BasicBlock;
+import de.gerolmed.wandustry.enchanting.EnchantingManager;
+import de.gerolmed.wandustry.enchanting.EnchantingRecipe;
 import de.gerolmed.wandustry.item.BasicItem;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.item.BlockItem;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import org.apache.logging.log4j.LogManager;
@@ -31,6 +34,8 @@ public class WandustryMod implements ModInitializer {
 		registerBlockEntities();
 
 		Features.initialize();
+
+		registerEnchanterRecipes();
 	}
 
 	/**
@@ -67,5 +72,18 @@ public class WandustryMod implements ModInitializer {
 		}
 
 		LOGGER.info("Finished!");
+	}
+
+	/**
+	 * Register enchanter recipes
+	 */
+	private void registerEnchanterRecipes() {
+		EnchantingManager.register(new EnchantingRecipe(
+				0,
+				20*10,
+				new ItemStack(net.minecraft.block.Blocks.STONE),
+				new ItemStack(net.minecraft.block.Blocks.DIRT),
+				new ItemStack(net.minecraft.block.Blocks.GRAVEL)
+		));
 	}
 }

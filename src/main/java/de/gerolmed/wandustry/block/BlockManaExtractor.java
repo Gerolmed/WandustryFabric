@@ -3,9 +3,12 @@ package de.gerolmed.wandustry.block;
 import de.gerolmed.wandustry.CreativeTabs;
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.minecraft.block.*;
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.VerticalEntityPosition;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.item.ItemStack;
 import net.minecraft.state.StateFactory;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.Property;
@@ -16,6 +19,8 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
+import net.minecraft.world.IWorld;
+import net.minecraft.world.ViewableWorld;
 
 public class BlockManaExtractor extends BasicBlock {
 
@@ -74,4 +79,24 @@ public class BlockManaExtractor extends BasicBlock {
         FACING = HorizontalFacingBlock.FACING;
     }
 
+    @Override
+    public BlockState getStateForNeighborUpdate(BlockState blockState_1, Direction direction_1, BlockState blockState_2, IWorld iWorld_1, BlockPos blockPos_1, BlockPos blockPos_2) {
+
+        if(direction_1 == Direction.DOWN) {
+            if(blockState_2.getBlock() == Blocks.AIR) {
+                iWorld_1.getWorld().spawnEntity(new ItemEntity(iWorld_1.getWorld(), blockPos_1.getX()+0.5, blockPos_1.getY()+.2, blockPos_1.getZ()+0.5, new ItemStack(this)));
+                return Blocks.AIR.getDefaultState();
+            }
+        }
+
+        return super.getStateForNeighborUpdate(blockState_1, direction_1, blockState_2, iWorld_1, blockPos_1, blockPos_2);
+    }
+
+    @Override
+    public boolean canPlaceAt(BlockState blockState_1, ViewableWorld viewableWorld_1, BlockPos blockPos_1) {
+        if(viewableWorld_1.getBlockState(blockPos_1.down()).getBlock() == Blocks.AIR) {
+            return false;
+        }
+        return super.canPlaceAt(blockState_1, viewableWorld_1, blockPos_1);
+    }
 }

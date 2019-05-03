@@ -61,20 +61,25 @@ public class EnchanterBlockEntityRenderer extends BlockEntityRenderer<EnchanterB
             BlockHitResult blockHit = (BlockHitResult) hitResult;
             if(blockHit.getBlockPos().equals(enchanter.getPos())) {
                 Vec3d player = MinecraftClient.getInstance().getCameraEntity().getPos();
-                double dx = enchanter.getPos().getX() - player.x;
-                double dy = enchanter.getPos().getY() - player.y;
-                double dz = enchanter.getPos().getZ() - player.z;
 
-                float yaw = (float) atan2(dz, dx);
-                float pitch = (float) atan2(dy, dx);
+                double dx = hitResult.getPos().x - player.x;
+                double dy = hitResult.getPos().y - player.y;
+                double dz = hitResult.getPos().z - player.z;
+
+                LOGGER.info(new Vec3d(dx, dy,dz).normalize());
+
+                float yaw = MinecraftClient.getInstance().getCameraEntity().yaw;//(float) atan2(dz, dx);
+                float pitch = MinecraftClient.getInstance().getCameraEntity().pitch;//(float) atan2(dy, dx);
 
                 GlStateManager.pushMatrix();
+                GlStateManager.disableDepthTest();
 
                 MinecraftClient.getInstance().getTextureManager().bindTexture(new Identifier(WandustryMod.MOD_ID, "textures/block/block_ruby.png"));
 
                 GlStateManager.translated(renderX, renderY, renderZ);
-                GlStateManager.rotatef(yaw, 0f, 0f, 1f);
-                GlStateManager.rotatef(pitch, 0f, 1f, 0f);
+
+                GlStateManager.rotatef(180.0F - this.renderManager.cameraEntity.getYaw(), 0.0F, 1.0F, 0.0F);
+                GlStateManager.rotatef( -this.renderManager.cameraEntity.getPitch(), 1.0F, 0.0F, 0.0F);
 
                 Tessellator tessellator = Tessellator.getInstance();
                 BufferBuilder buf = tessellator.getBufferBuilder();
@@ -89,6 +94,7 @@ public class EnchanterBlockEntityRenderer extends BlockEntityRenderer<EnchanterB
 
                 tessellator.draw();
 
+                GlStateManager.enableDepthTest();
                 GlStateManager.popMatrix();
             }
         }

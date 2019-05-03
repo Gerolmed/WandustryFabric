@@ -75,12 +75,17 @@ public class EnchanterBlockEntityRenderer extends BlockEntityRenderer<EnchanterB
                 GlStateManager.translated(renderX, renderY, renderZ);
                 GlStateManager.rotatef(yaw, 0f, 0f, 1f);
                 GlStateManager.rotatef(pitch, 0f, 1f, 0f);
-                // draw quad w/ tesselator or
 
                 Tessellator tessellator = Tessellator.getInstance();
                 BufferBuilder buf = tessellator.getBufferBuilder();
 
                 buf.begin(GL_QUADS, VertexFormats.POSITION_UV);
+
+                //Render image here
+                buf.vertex(0,0,0).texture(0,0).next();
+                buf.vertex(0,1,0).texture(0,1).next();
+                buf.vertex(1,1,0).texture(1,1).next();
+                buf.vertex(1,0,0).texture(1,0).next();
 
                 tessellator.draw();
 

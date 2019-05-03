@@ -60,39 +60,36 @@ public class EnchanterBlockEntityRenderer extends BlockEntityRenderer<EnchanterB
         if(hitResult instanceof BlockHitResult) {
             BlockHitResult blockHit = (BlockHitResult) hitResult;
             if(blockHit.getBlockPos().equals(enchanter.getPos())) {
-                Vec3d player = MinecraftClient.getInstance().getCameraEntity().getPos();
 
-                double dx = hitResult.getPos().x - player.x;
-                double dy = hitResult.getPos().y - player.y;
-                double dz = hitResult.getPos().z - player.z;
-
-                LOGGER.info(new Vec3d(dx, dy,dz).normalize());
-
-                float yaw = MinecraftClient.getInstance().getCameraEntity().yaw;//(float) atan2(dz, dx);
-                float pitch = MinecraftClient.getInstance().getCameraEntity().pitch;//(float) atan2(dy, dx);
+                float yaw = 0.0F - this.renderManager.cameraEntity.getYaw();
+                float pitch = this.renderManager.cameraEntity.getPitch();
 
                 GlStateManager.pushMatrix();
                 GlStateManager.disableDepthTest();
 
-                MinecraftClient.getInstance().getTextureManager().bindTexture(new Identifier(WandustryMod.MOD_ID, "textures/block/block_ruby.png"));
+                GlStateManager.translated(renderX+.5f, renderY+.5f, renderZ+.5f);
 
-                GlStateManager.translated(renderX, renderY, renderZ);
+                GlStateManager.rotatef(yaw, 0.0F, 1.0F, 0.0F);
+                GlStateManager.rotatef(pitch, 1.0F, 0.0F, 0.0F);
+                GlStateManager.translated(-.5f, -.5f, -.5f);
 
-                GlStateManager.rotatef(180.0F - this.renderManager.cameraEntity.getYaw(), 0.0F, 1.0F, 0.0F);
-                GlStateManager.rotatef( -this.renderManager.cameraEntity.getPitch(), 1.0F, 0.0F, 0.0F);
+                {
+                    GlStateManager.pushMatrix();
+                    Tessellator tessellator = Tessellator.getInstance();
+                    BufferBuilder buf = tessellator.getBufferBuilder();
 
-                Tessellator tessellator = Tessellator.getInstance();
-                BufferBuilder buf = tessellator.getBufferBuilder();
+                    buf.begin(GL_QUADS, VertexFormats.POSITION_UV);
 
-                buf.begin(GL_QUADS, VertexFormats.POSITION_UV);
+                    //Render image here
+                    buf.vertex(0,0,0).texture(0,0).next();
+                    buf.vertex(0,1,0).texture(0,1).next();
+                    buf.vertex(1,1,0).texture(1,1).next();
+                    buf.vertex(1,0,0).texture(1,0).next();
+                    MinecraftClient.getInstance().getTextureManager().bindTexture(new Identifier(WandustryMod.MOD_ID, "textures/block/block_ruby.png"));
 
-                //Render image here
-                buf.vertex(0,0,0).texture(0,0).next();
-                buf.vertex(0,1,0).texture(0,1).next();
-                buf.vertex(1,1,0).texture(1,1).next();
-                buf.vertex(1,0,0).texture(1,0).next();
-
-                tessellator.draw();
+                    tessellator.draw();
+                    GlStateManager.popMatrix();
+                }
 
                 GlStateManager.enableDepthTest();
                 GlStateManager.popMatrix();

@@ -64,7 +64,6 @@ public class BlockEnchanter extends BasicBlock implements BlockEntityProvider {
             for(ItemStack item : items) {
                 world_1.spawnEntity(new ItemEntity(world_1, blockPos_1.getX()+0.5, blockPos_1.getY()+1, blockPos_1.getZ()+0.5, item));
             }
-
         } else if(emptyClick) {
             // Remove last
             ItemStack item = enchanter.clearLastItem();
@@ -82,6 +81,7 @@ public class BlockEnchanter extends BasicBlock implements BlockEntityProvider {
 
             if(added)
                 itemStack.setAmount(itemStack.getAmount()-1);
+            return true;
         }
 
         return super.activate(blockState_1, world_1, blockPos_1, playerEntity_1, hand_1, blockHitResult_1);

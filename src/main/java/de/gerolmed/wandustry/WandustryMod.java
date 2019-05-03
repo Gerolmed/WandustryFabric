@@ -82,8 +82,16 @@ public class WandustryMod implements ModInitializer {
 				0,
 				20*10,
 				new ItemStack(net.minecraft.block.Blocks.STONE),
+
 				new ItemStack(net.minecraft.block.Blocks.DIRT),
 				new ItemStack(net.minecraft.block.Blocks.GRAVEL)
+		));
+		EnchantingManager.register(new EnchantingRecipe(
+				0,
+				20*10,
+				new ItemStack(net.minecraft.block.Blocks.COBBLESTONE),
+
+				new ItemStack(net.minecraft.block.Blocks.STONE)
 		));
 	}
 }

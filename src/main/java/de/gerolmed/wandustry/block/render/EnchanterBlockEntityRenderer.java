@@ -1,16 +1,25 @@
 package de.gerolmed.wandustry.block.render;
 
 import com.mojang.blaze3d.platform.GlStateManager;
+import de.gerolmed.wandustry.WandustryMod;
 import de.gerolmed.wandustry.block.entity.EnchanterBlockEntity;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.GuiLighting;
+import net.minecraft.client.render.Tessellator;
+import net.minecraft.client.render.VertexFormats;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.model.json.ModelTransformation;
-import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.util.hit.HitResult;
+import net.minecraft.util.math.Vec3d;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import static net.minecraft.util.math.MathHelper.atan2;
+import static org.lwjgl.opengl.GL11.GL_QUADS;
 
 public class EnchanterBlockEntityRenderer extends BlockEntityRenderer<EnchanterBlockEntity> {
 
@@ -46,7 +55,38 @@ public class EnchanterBlockEntityRenderer extends BlockEntityRenderer<EnchanterB
             itemNum++;
         }
 
+        // Render hover information
+        HitResult hitResult = MinecraftClient.getInstance().hitResult;
+        if(hitResult instanceof BlockHitResult) {
+            BlockHitResult blockHit = (BlockHitResult) hitResult;
+            if(blockHit.getBlockPos().equals(enchanter.getPos())) {
+                Vec3d player = MinecraftClient.getInstance().getCameraEntity().getPos();
+                double dx = enchanter.getPos().getX() - player.x;
+                double dy = enchanter.getPos().getY() - player.y;
+                double dz = enchanter.getPos().getZ() - player.z;
 
+                float yaw = (float) atan2(dz, dx);
+                float pitch = (float) atan2(dy, dx);
+
+                GlStateManager.pushMatrix();
+
+                MinecraftClient.getInstance().getTextureManager().bindTexture(new Identifier(WandustryMod.MOD_ID, "textures/block/block_ruby.png"));
+
+                GlStateManager.translated(renderX, renderY, renderZ);
+                GlStateManager.rotatef(yaw, 0f, 0f, 1f);
+                GlStateManager.rotatef(pitch, 0f, 1f, 0f);
+                // draw quad w/ tesselator or
+
+                Tessellator tessellator = Tessellator.getInstance();
+                BufferBuilder buf = tessellator.getBufferBuilder();
+
+                buf.begin(GL_QUADS, VertexFormats.POSITION_UV);
+
+                tessellator.draw();
+
+                GlStateManager.popMatrix();
+            }
+        }
     }
 
     private RenderPosition[] getRenders(int total) {

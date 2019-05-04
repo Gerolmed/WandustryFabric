@@ -23,6 +23,9 @@ public class EnchantingRecipe {
     }
 
     public boolean matchesIngredients(List<ItemStack> ingredients) {
+        if(inputs.length != ingredients.size())
+            return false;
+
         for(ItemStack itemStack : inputs) {
             if(!containsIngredient(itemStack, ingredients))
                 return false;

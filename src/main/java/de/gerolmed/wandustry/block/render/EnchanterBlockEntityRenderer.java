@@ -71,11 +71,13 @@ public class EnchanterBlockEntityRenderer extends BlockEntityRenderer<EnchanterB
 
                     GlStateManager.rotatef(yaw, 0.0F, 1.0F, 0.0F);
                     GlStateManager.rotatef(pitch, 1.0F, 0.0F, 0.0F);
-                    GlStateManager.scaled(0.7,0.7,0.7);
-                    GlStateManager.translated(-.5f, -.5f, -.5f);
+                    GlStateManager.scaled(0.5,0.5,0.5);
+                    GlStateManager.translated(-.5f, -.2f, -.5f);
 
                     {
                         GlStateManager.pushMatrix();
+                        GlStateManager.enableBlend();
+
                         Tessellator tessellator = Tessellator.getInstance();
                         BufferBuilder buf = tessellator.getBufferBuilder();
 
@@ -95,6 +97,8 @@ public class EnchanterBlockEntityRenderer extends BlockEntityRenderer<EnchanterB
                     //Display progress
                     if(enchanter.isEnchanting()){
                         GlStateManager.pushMatrix();
+                        GlStateManager.enableBlend();
+
                         Tessellator tessellator = Tessellator.getInstance();
                         BufferBuilder buf = tessellator.getBufferBuilder();
 
@@ -129,6 +133,8 @@ public class EnchanterBlockEntityRenderer extends BlockEntityRenderer<EnchanterB
                             GlStateManager.popMatrix();
                         } else {
                             GlStateManager.pushMatrix();
+                            GlStateManager.enableBlend();
+
                             Tessellator tessellator = Tessellator.getInstance();
                             BufferBuilder buf = tessellator.getBufferBuilder();
 
@@ -147,6 +153,7 @@ public class EnchanterBlockEntityRenderer extends BlockEntityRenderer<EnchanterB
                     } else {
                         // Show x to mark that no recipe is found
                         GlStateManager.pushMatrix();
+                        GlStateManager.enableBlend();
                         Tessellator tessellator = Tessellator.getInstance();
                         BufferBuilder buf = tessellator.getBufferBuilder();
 

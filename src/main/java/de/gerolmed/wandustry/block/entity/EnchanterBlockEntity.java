@@ -6,14 +6,10 @@ import de.gerolmed.wandustry.enchanting.EnchantingManager;
 import de.gerolmed.wandustry.enchanting.EnchantingRecipe;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.BlockState;
-import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.particle.DustParticleParameters;
-import net.minecraft.recipe.RecipeManager;
 import net.minecraft.util.Tickable;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -39,6 +35,8 @@ public class EnchanterBlockEntity extends BasicBlockEntity implements BlockEntit
     private EnchantingRecipe recipe;
     private boolean hasPower = false;
     private int enchantmentTime = 0;
+
+    public float enchantProgress;
 
     public EnchanterBlockEntity() {
         super(BlockEntities.ENCHANTER);
@@ -125,6 +123,8 @@ public class EnchanterBlockEntity extends BasicBlockEntity implements BlockEntit
 
         enchantmentTime++;
         LOGGER.info("Magic!");
+
+        enchantProgress = enchantmentTime / (float)recipe.getEnchantDurationTick();
 
         if(enchantmentTime < recipe.getEnchantDurationTick())
             return;
@@ -236,5 +236,25 @@ public class EnchanterBlockEntity extends BasicBlockEntity implements BlockEntit
 
     public ArrayList<ItemStack> getItemStacks() {
         return itemStacks;
+    }
+
+    public boolean isEnchanting() {
+        return recipe != null;
+    }
+
+    public EnchantingRecipe getRecipe() {
+        return recipe;
+    }
+
+    public boolean hasContents() {
+        return !itemStacks.isEmpty();
+    }
+
+    public boolean hasPower() {
+        return hasPower;
+    }
+
+    public int getRequiredPower() {
+        return recipe.getPowerLevel();
     }
 }

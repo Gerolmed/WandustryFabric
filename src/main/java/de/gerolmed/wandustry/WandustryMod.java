@@ -87,8 +87,8 @@ public class WandustryMod implements ModInitializer {
 				new ItemStack(net.minecraft.block.Blocks.GRAVEL)
 		));
 		EnchantingManager.register(new EnchantingRecipe(
-				0,
-				20*10,
+				3,
+				20*60,
 				new ItemStack(net.minecraft.block.Blocks.COBBLESTONE),
 
 				new ItemStack(net.minecraft.block.Blocks.STONE)

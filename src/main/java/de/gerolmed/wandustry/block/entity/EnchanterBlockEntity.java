@@ -27,7 +27,10 @@ public class EnchanterBlockEntity extends BasicBlockEntity implements BlockEntit
     };
 
     private ArrayList<ItemStack> itemStacks;
+
     private final int SLOT_COUNT = 5;
+    private final int EXTRACTOR_DISTANCE = 3;
+
     private boolean ready = true;
     private int ticker = 0, tickerReset = 10;
 
@@ -104,7 +107,6 @@ public class EnchanterBlockEntity extends BasicBlockEntity implements BlockEntit
     private void checkForEnchant() {
         recipe = EnchantingManager.getRecipe((List<ItemStack>) itemStacks.clone());
 
-        LOGGER.info("Its gone!");
         enchantmentTime = 0;
         hasPower = false;
 
@@ -122,7 +124,6 @@ public class EnchanterBlockEntity extends BasicBlockEntity implements BlockEntit
     private void enchant() {
 
         enchantmentTime++;
-        LOGGER.info("Magic!");
 
         enchantProgress = enchantmentTime / (float)recipe.getEnchantDurationTick();
 
@@ -135,7 +136,6 @@ public class EnchanterBlockEntity extends BasicBlockEntity implements BlockEntit
             itemStacks.add(itemStack.copy());
 
         recipe = null;
-        LOGGER.info("Final Magic!");
 
         if(getWorld().isClient)
             animate();
@@ -151,7 +151,7 @@ public class EnchanterBlockEntity extends BasicBlockEntity implements BlockEntit
     private int getCurrentPowerLevel() {
         int power = 0;
         for(Vec3d dir : MANA_OBTAIN_DIRECTIONS) {
-            for(int i = 1; i <= 4; i++) {
+            for(int i = 1; i <= EXTRACTOR_DISTANCE; i++) {
                Vec3d posVec =  dir.multiply(i);
                 BlockPos blockPos = new BlockPos(getPos().getX() + posVec.x, getPos().getY() + posVec.y, getPos().getZ() + posVec.z);
                 BlockState state = getWorld().getBlockState(blockPos);
@@ -214,7 +214,6 @@ public class EnchanterBlockEntity extends BasicBlockEntity implements BlockEntit
     @Override
     public void tick() {
 
-        //LOGGER.info("Tick: " + recipe);
         clickReduction();
 
         if(recipe == null)

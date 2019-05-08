@@ -5,12 +5,12 @@ import net.minecraft.item.ItemStack;
 import java.util.List;
 
 public class EnchantingRecipe {
-    private final ItemStack result;
+    private final ItemStack[] result;
     private final ItemStack[] inputs;
     private final int powerLevel;
     private int enchantDurationTick;
 
-    public EnchantingRecipe(int powerLevel, int enchantDurationTick, ItemStack result, ItemStack... inputs) {
+    public EnchantingRecipe(int powerLevel, int enchantDurationTick, ItemStack[] result, ItemStack... inputs) {
         if(inputs == null || inputs.length == 0 ||inputs.length > 5)
             throw new RuntimeException("Inputs must be between 0 (exclusive) and 5 (inclusive)");
         this.enchantDurationTick = enchantDurationTick;
@@ -18,8 +18,14 @@ public class EnchantingRecipe {
         this.result = result;
         this.inputs = inputs;
     }
+    public EnchantingRecipe(int powerLevel, int enchantDurationTick, ItemStack result, ItemStack... inputs) {
+        this(powerLevel, enchantDurationTick, new ItemStack[] {result}, inputs);
+    }
 
     public boolean matchesIngredients(List<ItemStack> ingredients) {
+        if(inputs.length != ingredients.size())
+            return false;
+
         for(ItemStack itemStack : inputs) {
             if(!containsIngredient(itemStack, ingredients))
                 return false;
@@ -35,7 +41,7 @@ public class EnchantingRecipe {
         return false;
     }
 
-    public ItemStack getResult() {
+    public ItemStack[] getResult() {
         return result;
     }
 

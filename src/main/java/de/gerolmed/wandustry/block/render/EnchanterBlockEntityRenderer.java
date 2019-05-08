@@ -1,16 +1,23 @@
 package de.gerolmed.wandustry.block.render;
 
 import com.mojang.blaze3d.platform.GlStateManager;
+import de.gerolmed.wandustry.WandustryMod;
 import de.gerolmed.wandustry.block.entity.EnchanterBlockEntity;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.GuiLighting;
+import net.minecraft.client.render.Tessellator;
+import net.minecraft.client.render.VertexFormats;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.model.json.ModelTransformation;
-import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.util.hit.HitResult;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import static org.lwjgl.opengl.GL11.GL_QUADS;
 
 public class EnchanterBlockEntityRenderer extends BlockEntityRenderer<EnchanterBlockEntity> {
 
@@ -46,7 +53,129 @@ public class EnchanterBlockEntityRenderer extends BlockEntityRenderer<EnchanterB
             itemNum++;
         }
 
+        if(enchanter.hasContents()) {
+            // Render hover information
+            HitResult hitResult = MinecraftClient.getInstance().hitResult;
+            if(hitResult instanceof BlockHitResult) {
+                BlockHitResult blockHit = (BlockHitResult) hitResult;
+                if(blockHit.getBlockPos().equals(enchanter.getPos())) {
 
+                    float yaw = 0.0F - this.renderManager.cameraEntity.getYaw();
+                    float pitch = this.renderManager.cameraEntity.getPitch();
+
+                    GlStateManager.pushMatrix();
+                    GlStateManager.disableDepthTest();
+                    GlStateManager.disableLighting();
+
+                    GlStateManager.translated(renderX+.5f, renderY+.5f, renderZ+.5f);
+
+                    GlStateManager.rotatef(yaw, 0.0F, 1.0F, 0.0F);
+                    GlStateManager.rotatef(pitch, 1.0F, 0.0F, 0.0F);
+                    GlStateManager.scaled(0.5,0.5,0.5);
+                    GlStateManager.translated(-.5f, -.2f, -.5f);
+
+                    {
+                        GlStateManager.pushMatrix();
+                        GlStateManager.enableBlend();
+
+                        Tessellator tessellator = Tessellator.getInstance();
+                        BufferBuilder buf = tessellator.getBufferBuilder();
+
+                        buf.begin(GL_QUADS, VertexFormats.POSITION_UV);
+
+                        //Render image here
+                        buf.vertex(0,0,0).texture(0,0).next();
+                        buf.vertex(0,1,0).texture(0,1).next();
+                        buf.vertex(1,1,0).texture(1,1).next();
+                        buf.vertex(1,0,0).texture(1,0).next();
+                        MinecraftClient.getInstance().getTextureManager().bindTexture(new Identifier(WandustryMod.MOD_ID, "textures/block/ui/enchanter_enchant.png"));
+
+                        tessellator.draw();
+                        GlStateManager.popMatrix();
+                    }
+
+                    //Display progress
+                    if(enchanter.isEnchanting()){
+                        GlStateManager.pushMatrix();
+                        GlStateManager.enableBlend();
+
+                        Tessellator tessellator = Tessellator.getInstance();
+                        BufferBuilder buf = tessellator.getBufferBuilder();
+
+                        buf.begin(GL_QUADS, VertexFormats.POSITION_UV);
+
+                        //Render image here
+                        buf.vertex(0,0,0).texture(0,0).next();
+                        buf.vertex(0,enchanter.enchantProgress,0).texture(0,enchanter.enchantProgress).next();
+                        buf.vertex(1,enchanter.enchantProgress,0).texture(1,enchanter.enchantProgress).next();
+                        buf.vertex(1,0,0).texture(1,0).next();
+                        MinecraftClient.getInstance().getTextureManager().bindTexture(new Identifier(WandustryMod.MOD_ID, "textures/block/ui/enchanter_enchant_progress.png"));
+
+                        tessellator.draw();
+                        GlStateManager.popMatrix();
+                    }
+
+                    //Render result
+                    if(enchanter.isEnchanting()){
+                        if(enchanter.hasPower()) {
+                            GlStateManager.pushMatrix();
+
+                            GuiLighting.enable();
+
+                            GlStateManager.enableLighting();
+                            GlStateManager.disableRescaleNormal();
+
+                            GlStateManager.translated(0.5, 0.35, 0);
+                            //GlStateManager.rotated(position.rot, 0,1,0);
+                            GlStateManager.scaled(0.8, 0.8, 0.8);
+
+                            MinecraftClient.getInstance().getItemRenderer().renderItem(enchanter.getRecipe().getResult()[0], ModelTransformation.Type.GROUND);
+                            GlStateManager.popMatrix();
+                        } else {
+                            GlStateManager.pushMatrix();
+                            GlStateManager.enableBlend();
+
+                            Tessellator tessellator = Tessellator.getInstance();
+                            BufferBuilder buf = tessellator.getBufferBuilder();
+
+                            buf.begin(GL_QUADS, VertexFormats.POSITION_UV);
+
+                            //Render image here
+                            buf.vertex(0,0,0).texture(0,0).next();
+                            buf.vertex(0,1,0).texture(0,1).next();
+                            buf.vertex(1,1,0).texture(1,1).next();
+                            buf.vertex(1,0,0).texture(1,0).next();
+                            MinecraftClient.getInstance().getTextureManager().bindTexture(new Identifier(WandustryMod.MOD_ID, "textures/block/ui/enchanter_enchant_missing_power.png"));
+
+                            tessellator.draw();
+                            GlStateManager.popMatrix();
+                        }
+                    } else {
+                        // Show x to mark that no recipe is found
+                        GlStateManager.pushMatrix();
+                        GlStateManager.enableBlend();
+                        Tessellator tessellator = Tessellator.getInstance();
+                        BufferBuilder buf = tessellator.getBufferBuilder();
+
+                        buf.begin(GL_QUADS, VertexFormats.POSITION_UV);
+
+                        //Render image here
+                        buf.vertex(0,0,0).texture(0,0).next();
+                        buf.vertex(0,1,0).texture(0,1).next();
+                        buf.vertex(1,1,0).texture(1,1).next();
+                        buf.vertex(1,0,0).texture(1,0).next();
+                        MinecraftClient.getInstance().getTextureManager().bindTexture(new Identifier(WandustryMod.MOD_ID, "textures/block/ui/enchanter_enchant_missing_recipe.png"));
+
+                        tessellator.draw();
+                        GlStateManager.popMatrix();
+                    }
+
+                    GlStateManager.enableLighting();
+                    GlStateManager.enableDepthTest();
+                    GlStateManager.popMatrix();
+                }
+            }
+        }
     }
 
     private RenderPosition[] getRenders(int total) {

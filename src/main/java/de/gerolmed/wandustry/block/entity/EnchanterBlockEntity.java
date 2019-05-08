@@ -6,13 +6,10 @@ import de.gerolmed.wandustry.enchanting.EnchantingManager;
 import de.gerolmed.wandustry.enchanting.EnchantingRecipe;
 import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.BlockState;
-import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.recipe.RecipeManager;
 import net.minecraft.util.Tickable;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -30,7 +27,10 @@ public class EnchanterBlockEntity extends BasicBlockEntity implements BlockEntit
     };
 
     private ArrayList<ItemStack> itemStacks;
+
     private final int SLOT_COUNT = 5;
+    private final int EXTRACTOR_DISTANCE = 3;
+
     private boolean ready = true;
     private int ticker = 0, tickerReset = 10;
 
@@ -38,7 +38,8 @@ public class EnchanterBlockEntity extends BasicBlockEntity implements BlockEntit
     private EnchantingRecipe recipe;
     private boolean hasPower = false;
     private int enchantmentTime = 0;
-    private boolean isEnchanting = false;
+
+    public float enchantProgress;
 
     public EnchanterBlockEntity() {
         super(BlockEntities.ENCHANTER);
@@ -56,7 +57,6 @@ public class EnchanterBlockEntity extends BasicBlockEntity implements BlockEntit
 
         compoundTag_1.putBoolean("hasPower", hasPower);
         compoundTag_1.putInt("enchantmentTime", enchantmentTime);
-        compoundTag_1.putBoolean("isEnchanting", isEnchanting);
 
         return super.toTag(compoundTag_1);
     }
@@ -71,9 +71,7 @@ public class EnchanterBlockEntity extends BasicBlockEntity implements BlockEntit
         }
 
         hasPower = compoundTag_1.getBoolean("hasPower");
-        isEnchanting = compoundTag_1.getBoolean("isEnchanting");
         enchantmentTime = compoundTag_1.getInt("enchantmentTime");
-        LOGGER.info("Loaded: 4");
 
         recipe = EnchantingManager.getRecipe(itemStacks);
 
@@ -109,8 +107,6 @@ public class EnchanterBlockEntity extends BasicBlockEntity implements BlockEntit
     private void checkForEnchant() {
         recipe = EnchantingManager.getRecipe((List<ItemStack>) itemStacks.clone());
 
-        isEnchanting = false;
-        LOGGER.info("Its gone!");
         enchantmentTime = 0;
         hasPower = false;
 
@@ -127,23 +123,35 @@ public class EnchanterBlockEntity extends BasicBlockEntity implements BlockEntit
 
     private void enchant() {
 
-        isEnchanting = true;
         enchantmentTime++;
-        LOGGER.info("Magic!");
+
+        enchantProgress = enchantmentTime / (float)recipe.getEnchantDurationTick();
 
         if(enchantmentTime < recipe.getEnchantDurationTick())
             return;
 
-        isEnchanting = false;
         itemStacks.clear();
-        itemStacks.add(recipe.getResult().copy());
-        LOGGER.info("Final Magic!");
+
+        for(ItemStack itemStack : recipe.getResult())
+            itemStacks.add(itemStack.copy());
+
+        recipe = null;
+
+        if(getWorld().isClient)
+            animate();
+
+
+        checkForEnchant();
+    }
+
+    private void animate() {
+        //TODO: show particles taking mana
     }
 
     private int getCurrentPowerLevel() {
         int power = 0;
         for(Vec3d dir : MANA_OBTAIN_DIRECTIONS) {
-            for(int i = 1; i <= 4; i++) {
+            for(int i = 1; i <= EXTRACTOR_DISTANCE; i++) {
                Vec3d posVec =  dir.multiply(i);
                 BlockPos blockPos = new BlockPos(getPos().getX() + posVec.x, getPos().getY() + posVec.y, getPos().getZ() + posVec.z);
                 BlockState state = getWorld().getBlockState(blockPos);
@@ -206,17 +214,14 @@ public class EnchanterBlockEntity extends BasicBlockEntity implements BlockEntit
     @Override
     public void tick() {
 
-        LOGGER.info("Tick: " + isEnchanting + " | " + recipe);
         clickReduction();
 
-        if(recipe == null || !isEnchanting)
+        if(recipe == null)
             return;
 
-        hasPower = recipe.getPowerLevel() >= getCurrentPowerLevel();
+        hasPower = recipe.getPowerLevel() <= getCurrentPowerLevel();
 
-        if(!hasPower) {
-            isEnchanting = false;
-        } else
+        if(hasPower)
             enchant();
     }
 
@@ -230,5 +235,25 @@ public class EnchanterBlockEntity extends BasicBlockEntity implements BlockEntit
 
     public ArrayList<ItemStack> getItemStacks() {
         return itemStacks;
+    }
+
+    public boolean isEnchanting() {
+        return recipe != null;
+    }
+
+    public EnchantingRecipe getRecipe() {
+        return recipe;
+    }
+
+    public boolean hasContents() {
+        return !itemStacks.isEmpty();
+    }
+
+    public boolean hasPower() {
+        return hasPower;
+    }
+
+    public int getRequiredPower() {
+        return recipe.getPowerLevel();
     }
 }

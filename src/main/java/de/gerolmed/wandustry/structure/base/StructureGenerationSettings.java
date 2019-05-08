@@ -1,7 +1,6 @@
 package de.gerolmed.wandustry.structure.base;
 
 
-import com.sun.istack.internal.NotNull;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStep;
 
@@ -13,7 +12,7 @@ public class StructureGenerationSettings {
     private GenerationStep.Feature type;
     private int chunkDistance;
 
-    public StructureGenerationSettings(GenerationStep.Feature type, int chunkDistance, @NotNull Biome.Category... biomes) {
+    public StructureGenerationSettings(GenerationStep.Feature type, int chunkDistance, Biome.Category... biomes) {
         this.chunkDistance = chunkDistance;
         this.biomes = new ArrayList<>(Arrays.asList(biomes));
         this.type = type;

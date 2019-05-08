@@ -4,10 +4,7 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import de.gerolmed.wandustry.WandustryMod;
 import de.gerolmed.wandustry.block.entity.EnchanterBlockEntity;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.BufferBuilder;
-import net.minecraft.client.render.GuiLighting;
-import net.minecraft.client.render.Tessellator;
-import net.minecraft.client.render.VertexFormats;
+import net.minecraft.client.render.*;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.item.ItemStack;
@@ -131,6 +128,7 @@ public class EnchanterBlockEntityRenderer extends BlockEntityRenderer<EnchanterB
 
                             MinecraftClient.getInstance().getItemRenderer().renderItem(enchanter.getRecipe().getResult()[0], ModelTransformation.Type.GROUND);
                             GlStateManager.popMatrix();
+
                         } else {
                             GlStateManager.pushMatrix();
                             GlStateManager.enableBlend();

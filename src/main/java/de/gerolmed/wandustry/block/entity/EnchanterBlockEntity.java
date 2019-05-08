@@ -285,21 +285,21 @@ public class EnchanterBlockEntity extends BasicBlockEntity implements BlockEntit
         if(world == null)
             return;
 
-        Vec3d thisPosition = new Vec3d(pos.getX()+.5, pos.getY(), pos.getZ()+.5);
+        Vec3d thisPosition = new Vec3d(pos.getX()+.5, pos.getY()+.5, pos.getZ()+.5);
 
         for(Vec3d position : getPowerProvidersPositions()) {
 
             Vec3d origin = new Vec3d(position.x, position.y, position.z);
             Vec3d velocity = thisPosition.subtract(origin);
 
-            double speed = 0.2;
+            double speed = 0.25 * (velocity.length()/3);
 
 
 
             velocity = velocity.normalize().multiply(speed);
 
             for(int i = 0; i < 3; i++)
-                world.addParticle(ParticleTypes.SMOKE,true, origin.x, origin.y, origin.z, velocity.x, velocity.y, velocity.z);
+                world.addParticle(ParticleTypes.END_ROD,true, origin.x, origin.y, origin.z, velocity.x, velocity.y, velocity.z);
         }
     }
 }

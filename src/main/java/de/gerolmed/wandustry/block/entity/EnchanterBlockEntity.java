@@ -8,6 +8,8 @@ import net.fabricmc.fabric.api.block.entity.BlockEntityClientSerializable;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.particle.ParticleParameters;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.util.Tickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -126,6 +128,8 @@ public class EnchanterBlockEntity extends BasicBlockEntity implements BlockEntit
         enchantmentTime++;
 
         enchantProgress = enchantmentTime / (float)recipe.getEnchantDurationTick();
+        animate();
+
 
         if(enchantmentTime < recipe.getEnchantDurationTick())
             return;
@@ -137,15 +141,8 @@ public class EnchanterBlockEntity extends BasicBlockEntity implements BlockEntit
 
         recipe = null;
 
-        if(getWorld().isClient)
-            animate();
-
 
         checkForEnchant();
-    }
-
-    private void animate() {
-        //TODO: show particles taking mana
     }
 
     private int getCurrentPowerLevel() {
@@ -167,6 +164,32 @@ public class EnchanterBlockEntity extends BasicBlockEntity implements BlockEntit
             }
         }
         return power;
+    }
+
+    public ArrayList<Vec3d> getPowerProvidersPositions() {
+
+        ArrayList<Vec3d> providers = new ArrayList<>();
+
+        for(Vec3d dir : MANA_OBTAIN_DIRECTIONS) {
+            for(int i = 1; i <= EXTRACTOR_DISTANCE; i++) {
+                Vec3d posVec =  dir.multiply(i);
+                BlockPos blockPos = new BlockPos(getPos().getX() + posVec.x, getPos().getY() + posVec.y, getPos().getZ() + posVec.z);
+                BlockState state = getWorld().getBlockState(blockPos);
+
+                if(state == null)
+                    continue;
+
+                if(state.getBlock() == Blocks.BLOCK_MANA_EXTRACTOR) {
+                    Vec3d position = new Vec3d(blockPos.getX(), blockPos.getY(), blockPos.getZ());
+                    position = position.add(0.5, 0.5, 0.5);
+                    providers.add(position);
+                    break;
+                }
+
+            }
+        }
+
+        return providers;
     }
 
     @SuppressWarnings("unchecked")
@@ -255,5 +278,28 @@ public class EnchanterBlockEntity extends BasicBlockEntity implements BlockEntit
 
     public int getRequiredPower() {
         return recipe.getPowerLevel();
+    }
+
+    private void animate() {
+        //TODO: show particles taking mana
+        if(world == null)
+            return;
+
+        Vec3d thisPosition = new Vec3d(pos.getX()+.5, pos.getY(), pos.getZ()+.5);
+
+        for(Vec3d position : getPowerProvidersPositions()) {
+
+            Vec3d origin = new Vec3d(position.x, position.y, position.z);
+            Vec3d velocity = thisPosition.subtract(origin);
+
+            double speed = 0.2;
+
+
+
+            velocity = velocity.normalize().multiply(speed);
+
+            for(int i = 0; i < 3; i++)
+                world.addParticle(ParticleTypes.SMOKE,true, origin.x, origin.y, origin.z, velocity.x, velocity.y, velocity.z);
+        }
     }
 }

@@ -276,12 +276,7 @@ public class EnchanterBlockEntity extends BasicBlockEntity implements BlockEntit
         return hasPower;
     }
 
-    public int getRequiredPower() {
-        return recipe.getPowerLevel();
-    }
-
     private void animate() {
-        //TODO: show particles taking mana
         if(world == null)
             return;
 

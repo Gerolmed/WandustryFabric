@@ -104,5 +104,71 @@ public class WandustryMod implements ModInitializer {
 				new ItemStack(net.minecraft.block.Blocks.OBSIDIAN),
 				new ItemStack(Items.ITEM_MAGIC_INGOT)
 		));
+
+		// Ingot recipe
+
+        /* Craft one magic iron ingot */
+        EnchantingManager.register(new EnchantingRecipe(
+                0,
+                20*10,
+                new ItemStack[] {
+                        new ItemStack(Items.ITEM_MAGIC_IRON)
+                },
+
+                new ItemStack(net.minecraft.item.Items.IRON_INGOT),
+                new ItemStack(Items.ITEM_MAGIC_INGOT)
+        ));
+        /* Craft two magic iron ingots */
+        EnchantingManager.register(new EnchantingRecipe(
+                1,
+                20*15,
+                new ItemStack[] {
+                        new ItemStack(Items.ITEM_MAGIC_IRON),
+                        new ItemStack(Items.ITEM_MAGIC_IRON)
+                },
+
+                new ItemStack(net.minecraft.item.Items.IRON_INGOT),
+                new ItemStack(net.minecraft.item.Items.IRON_INGOT),
+                new ItemStack(Items.ITEM_MAGIC_INGOT),
+                new ItemStack(Items.ITEM_MAGIC_INGOT)
+        ));
+        /* Craft one magic gold ingot */
+        EnchantingManager.register(new EnchantingRecipe(
+                1,
+                20*10,
+                new ItemStack[] {
+                        new ItemStack(Items.ITEM_MAGIC_GOLD)
+                },
+
+                new ItemStack(net.minecraft.item.Items.GOLD_INGOT),
+                new ItemStack(Items.ITEM_MAGIC_INGOT)
+        ));
+        /* Craft two magic gold ingots */
+        EnchantingManager.register(new EnchantingRecipe(
+                2,
+                20*15,
+                new ItemStack[] {
+                        new ItemStack(Items.ITEM_MAGIC_GOLD),
+                        new ItemStack(Items.ITEM_MAGIC_GOLD)
+                },
+
+                new ItemStack(net.minecraft.item.Items.GOLD_INGOT),
+                new ItemStack(net.minecraft.item.Items.GOLD_INGOT),
+                new ItemStack(Items.ITEM_MAGIC_INGOT),
+                new ItemStack(Items.ITEM_MAGIC_INGOT)
+        ));
+        /* Craft one magic diamond */
+        EnchantingManager.register(new EnchantingRecipe(
+                3,
+                20*17,
+                new ItemStack[] {
+                        new ItemStack(Items.ITEM_MAGIC_DIAMOND)
+                },
+
+                new ItemStack(net.minecraft.item.Items.DIAMOND),
+                new ItemStack(Items.ITEM_MAGIC_INGOT),
+                new ItemStack(Items.ITEM_MAGIC_INGOT),
+                new ItemStack(Items.ITEM_MAGIC_INGOT)
+        ));
 	}
 }

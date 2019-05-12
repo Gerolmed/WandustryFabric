@@ -12,6 +12,9 @@
 
   "item.wandustry.item_test": "Test Item",
   "item.wandustry.item_magic_ingot": "Magic Ingot",
+  "item.wandustry.item_magic_iron": "Magically Charged Iron",
+  "item.wandustry.item_magic_gold": "Magically Charged Gold",
+  "item.wandustry.item_magic_diamond": "Magically Charged Diamond",
 
   "itemGroup.wandustry.base": "Base Tab"
 }

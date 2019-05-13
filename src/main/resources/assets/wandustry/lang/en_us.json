@@ -15,6 +15,10 @@
   "item.wandustry.item_magic_iron": "Magically Charged Iron",
   "item.wandustry.item_magic_gold": "Magically Charged Gold",
   "item.wandustry.item_magic_diamond": "Magically Charged Diamond",
+  "item.wandustry.item_ruby_shard": "Ruby Shard",
+  "item.wandustry.item_emerald_shard": "Emerald Shard",
+  "item.wandustry.item_sapphire_shard": "Sapphire Shard",
+
 
   "itemGroup.wandustry.base": "Base Tab"
 }

@@ -2,6 +2,7 @@ package de.gerolmed.wandustry.block;
 
 import de.gerolmed.wandustry.CreativeTabs;
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
+import net.fabricmc.fabric.api.tag.FabricItemTags;
 import net.minecraft.block.BlockRenderLayer;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
@@ -13,7 +14,10 @@ import net.minecraft.world.BlockView;
 public class BlockEmeraldOre extends BasicBlock {
     public BlockEmeraldOre() {
         super("block_emerald_ore",
-                FabricBlockSettings.of(Material.METAL).build(),
+                FabricBlockSettings.of(Material.METAL)
+                        .strength(4,10)
+                        .breakByTool(FabricItemTags.PICKAXES, 2)
+                        .build(),
                 new Item.Settings().itemGroup(CreativeTabs.BASE_GROUP));
     }
 

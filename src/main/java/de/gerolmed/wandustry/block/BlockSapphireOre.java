@@ -2,6 +2,7 @@ package de.gerolmed.wandustry.block;
 
 import de.gerolmed.wandustry.CreativeTabs;
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
+import net.fabricmc.fabric.api.tag.FabricItemTags;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Material;
@@ -12,7 +13,10 @@ import net.minecraft.world.BlockView;
 public class BlockSapphireOre extends BasicBlock {
     public BlockSapphireOre() {
         super("block_sapphire_ore",
-                FabricBlockSettings.of(Material.METAL).build(),
+                FabricBlockSettings.of(Material.METAL)
+                        .strength(4,10)
+                        .breakByTool(FabricItemTags.PICKAXES, 2)
+                        .build(),
                 new Item.Settings().itemGroup(CreativeTabs.BASE_GROUP));
     }
 

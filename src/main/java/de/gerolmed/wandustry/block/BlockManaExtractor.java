@@ -3,8 +3,8 @@ package de.gerolmed.wandustry.block;
 import de.gerolmed.wandustry.CreativeTabs;
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.minecraft.block.*;
+import net.minecraft.entity.EntityContext;
 import net.minecraft.entity.ItemEntity;
-import net.minecraft.entity.VerticalEntityPosition;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemPlacementContext;
@@ -46,7 +46,7 @@ public class BlockManaExtractor extends BasicBlock {
     }
 
     @Override
-    public VoxelShape getOutlineShape(BlockState blockState_1, BlockView blockView_1, BlockPos blockPos_1, VerticalEntityPosition verticalEntityPosition_1) {
+    public VoxelShape getOutlineShape(BlockState blockState_1, BlockView blockView_1, BlockPos blockPos_1, EntityContext entityContext_1) {
         return SHAPE;
     }
 
@@ -57,7 +57,7 @@ public class BlockManaExtractor extends BasicBlock {
 
     @Override
     protected void appendProperties(StateFactory.Builder<Block, BlockState> stateFactory$Builder_1) {
-        stateFactory$Builder_1.with(FACING);
+        stateFactory$Builder_1.add(FACING);
     }
 
     @Override

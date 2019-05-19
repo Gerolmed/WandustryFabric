@@ -5,8 +5,7 @@
   "mixins": [
   ],
   "client": [
-    "WandustryMixin",
-    "ChunkRendererMixin"
+    "WandustryMixin"
   ],
   "injectors": {
     "defaultRequire": 1

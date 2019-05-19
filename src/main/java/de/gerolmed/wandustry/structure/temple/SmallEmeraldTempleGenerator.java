@@ -10,9 +10,9 @@ import net.minecraft.util.BlockMirror;
 import net.minecraft.util.BlockRotation;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MutableIntBoundingBox;
 import net.minecraft.world.IWorld;
-import net.minecraft.world.chunk.ChunkPos;
 import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 
 import java.util.List;
@@ -36,7 +36,7 @@ public class SmallEmeraldTempleGenerator
             super(Features.getPiece("small_emerald_temple"), compoundTag_1);
 
             this.identifier = new Identifier(compoundTag_1.getString("Template"));
-            this.rotation = compoundTag_1.containsKey("Rot") ? BlockRotation.valueOf(compoundTag_1.getString("Rot")) : BlockRotation.ROT_0;
+            this.rotation = compoundTag_1.containsKey("Rot") ? BlockRotation.valueOf(compoundTag_1.getString("Rot")) : BlockRotation.NONE;
 
             this.setStructureData(structureManager_1);
         }

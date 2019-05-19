@@ -36,6 +36,8 @@ public class WandustryMod implements ModInitializer {
 		Features.initialize();
 
 		registerEnchanterRecipes();
+
+		Containers.register();
 	}
 
 	/**

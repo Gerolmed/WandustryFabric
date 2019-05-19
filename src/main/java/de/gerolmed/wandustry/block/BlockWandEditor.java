@@ -1,11 +1,11 @@
 package de.gerolmed.wandustry.block;
 
+import de.gerolmed.wandustry.Containers;
 import de.gerolmed.wandustry.CreativeTabs;
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 import net.minecraft.block.*;
 import net.minecraft.entity.ItemEntity;
-import net.minecraft.entity.VerticalEntityPosition;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemPlacementContext;
@@ -41,9 +41,9 @@ public class BlockWandEditor extends BasicBlock {
 
     @Override
     public boolean activate(BlockState blockState, World world, BlockPos blockPos, PlayerEntity player, Hand hand, BlockHitResult blockHitResult) {
-        // Container registration
+        // Container startup
         if(!world.isClient) {
-            //ContainerProviderRegistry.INSTANCE.openContainer(Containers.WAND_EDITOR, player, buf -> buf.writeBlockPos(blockPos));
+            ContainerProviderRegistry.INSTANCE.openContainer(Containers.WAND_EDITOR, player, buf -> buf.writeBlockPos(blockPos));
         }
         return true;
     }
@@ -65,7 +65,7 @@ public class BlockWandEditor extends BasicBlock {
 
     @Override
     protected void appendProperties(StateFactory.Builder<Block, BlockState> stateFactory$Builder_1) {
-        stateFactory$Builder_1.with(FACING);
+        stateFactory$Builder_1.add(FACING);
     }
 
     @Override

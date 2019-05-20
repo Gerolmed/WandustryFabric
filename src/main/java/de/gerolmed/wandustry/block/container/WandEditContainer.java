@@ -13,18 +13,18 @@ public class WandEditContainer extends Container {
     public WandEditContainer(int syncId, PlayerEntity playerEntity) {
         super(null, syncId);
         this.playerInventory = playerEntity.inventory;
-        drawPlayerInventory();
+        drawPlayerInventory(84);
     }
 
-    private void drawPlayerInventory() {
+    private void drawPlayerInventory(int offset) {
         for (int i = 0; i < 3; ++i) {
             for (int j = 0; j < 9; ++j) {
-                this.addSlot(new Slot(playerInventory, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
+                this.addSlot(new Slot(playerInventory, j + i * 9 + 9, 8 + j * 18, offset + i * 18));
             }
         }
 
         for (int j = 0; j < 9; ++j) {
-            this.addSlot(new Slot(playerInventory, j, 8 + j * 18, 142));
+            this.addSlot(new Slot(playerInventory, j, 8 + j * 18, offset+58));
         }
     }
 

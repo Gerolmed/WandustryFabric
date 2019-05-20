@@ -20,8 +20,12 @@
   "entrypoints": {
     "main": [
       "de.gerolmed.wandustry.WandustryMod"
+    ],
+    "client": [
+      "de.gerolmed.wandustry.WandustryModClient"
     ]
   },
+
   "mixins": [
     "wandustry.mixins.json"
   ],

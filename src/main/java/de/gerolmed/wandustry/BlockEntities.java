@@ -1,5 +1,6 @@
 package de.gerolmed.wandustry;
 
+import de.gerolmed.wandustry.block.BlockEnchanter;
 import de.gerolmed.wandustry.block.entity.EnchanterBlockEntity;
 import de.gerolmed.wandustry.block.render.EnchanterBlockEntityRenderer;
 import net.fabricmc.fabric.api.client.render.BlockEntityRendererRegistry;
@@ -11,11 +12,14 @@ import net.minecraft.util.registry.Registry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.Arrays;
+import java.util.HashSet;
+
 public class BlockEntities {
 
     private static final Logger LOGGER = LogManager.getLogger(BlockEntities.class);
 
-    public static final BlockEntityType<EnchanterBlockEntity> ENCHANTER = BlockEntityType.Builder.create(EnchanterBlockEntity::new).build(null);
+    public static final BlockEntityType<EnchanterBlockEntity> ENCHANTER = BlockEntityType.Builder.create(EnchanterBlockEntity::new, Blocks.BLOCK_ENCHANTER).build(null);
 
     public static void register(){
         LOGGER.info("Starting to register all BlockEntities");

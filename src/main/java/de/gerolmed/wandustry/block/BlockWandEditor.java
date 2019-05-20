@@ -5,11 +5,9 @@ import de.gerolmed.wandustry.CreativeTabs;
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.container.ContainerProviderRegistry;
 import net.minecraft.block.*;
-import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.item.ItemStack;
 import net.minecraft.state.StateFactory;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.util.BlockMirror;
@@ -21,8 +19,6 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.ViewableWorld;
 import net.minecraft.world.World;
 
 public class BlockWandEditor extends BasicBlock {
@@ -32,7 +28,7 @@ public class BlockWandEditor extends BasicBlock {
 
 
     public BlockWandEditor() {
-        super("block_eand_editor",
+        super("block_wand_editor",
                 FabricBlockSettings.of(Material.METAL).build(),
                 new Item.Settings().itemGroup(CreativeTabs.BASE_GROUP));
         this.setDefaultState((this.stateFactory.getDefaultState()).with(FACING, Direction.NORTH));

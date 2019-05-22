@@ -10,8 +10,10 @@ import net.minecraft.inventory.BasicInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
+import org.apache.logging.log4j.Logger;
 
 public class WandEditContainer extends Container {
+
     public final PlayerInventory playerInventory;
     BlockPos pos;
     private Inventory inventory;
@@ -78,24 +80,28 @@ public class WandEditContainer extends Container {
     }
 
     @Override
-    public ItemStack onSlotClick(int x, int y, SlotActionType slotActionType, PlayerEntity playerEntity) {
-        Slot slot = findSlot(x, y);
+    public ItemStack onSlotClick(int slotNr, int int_2, SlotActionType action, PlayerEntity playerEntity) {
+
+        if(slotNr < 0)
+            return super.onSlotClick(slotNr, int_2, action, playerEntity);
+
+        Slot slot = this.slotList.get(slotNr);
 
         if(!(slot instanceof EnchanterSlot))
-            return super.onSlotClick(x, y, slotActionType, playerEntity);
+            return super.onSlotClick(slotNr, int_2, action, playerEntity);
 
         //do stuff
-        return super.onSlotClick(x, y, slotActionType, playerEntity);
+        ItemStack cursor = playerEntity.inventory.getCursorStack();
+
+        if(canInsertIntoSlot(cursor, slot)) {
+            return super.onSlotClick(slotNr, int_2, action, playerEntity);
+        }
+
+        return cursor;
     }
 
-    private Slot findSlot(int x, int y) {
-        for(Slot slot : slotList) {
-            if(slot.xPosition < x || x > slot.xPosition + 16)
-                continue;
-            if(slot.yPosition < y || y > slot.yPosition + 16)
-                continue;
-            return slot;
-        }
-        return null;
+    @Override
+    public void close(PlayerEntity playerEntity_1) {
+        super.close(playerEntity_1);
     }
 }

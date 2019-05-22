@@ -19,8 +19,13 @@ public class EnchanterSlot extends Slot {
         return type;
     }
 
+    @Override
+    public int getMaxStackAmount() {
+        return 1;
+    }
+
     public enum Type {
-        WAND(Items.STICK),
+        WAND(Items.STICK, Items.AIR),
 
         TYPE_1(Items.NETHER_STAR),
         MOD_1_1,

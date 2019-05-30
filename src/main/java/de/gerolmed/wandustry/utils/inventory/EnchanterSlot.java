@@ -27,27 +27,33 @@ public class EnchanterSlot extends Slot {
     public enum Type {
         WAND(Items.STICK, Items.AIR),
 
-        TYPE_1(Items.NETHER_STAR),
-        MOD_1_1,
-        MOD_1_2,
-        MOD_1_3,
-        MOD_1_4,
+        TYPE_1(WAND, Items.NETHER_STAR),
+        MOD_1_1(TYPE_1, Items.STONE, Items.AIR),
+        MOD_1_2(TYPE_1, Items.STONE, Items.AIR),
+        MOD_1_3(TYPE_1, Items.STONE, Items.AIR),
+        MOD_1_4(TYPE_1, Items.STONE, Items.AIR),
 
-        TYPE_2(Items.QUARTZ),
-        MOD_2_1,
-        MOD_2_2,
-        MOD_2_3,
-        MOD_2_4,
+        TYPE_2(WAND, Items.QUARTZ),
+        MOD_2_1(TYPE_2, Items.STONE, Items.AIR),
+        MOD_2_2(TYPE_2, Items.STONE, Items.AIR),
+        MOD_2_3(TYPE_2, Items.STONE, Items.AIR),
+        MOD_2_4(TYPE_2, Items.STONE, Items.AIR),
 
-        TYPE_3(Items.BEACON),
-        MOD_3_1,
-        MOD_3_2,
-        MOD_3_3,
-        MOD_3_4;
+        TYPE_3(WAND, Items.BEACON),
+        MOD_3_1(TYPE_3, Items.STONE, Items.AIR),
+        MOD_3_2(TYPE_3, Items.STONE, Items.AIR),
+        MOD_3_3(TYPE_3, Items.STONE, Items.AIR),
+        MOD_3_4(TYPE_3, Items.STONE, Items.AIR);
 
+        private final Type parent;
         private Item[] items;
 
         Type(Item... items) {
+            this(null, items);
+        }
+
+        Type(Type parent, Item... items) {
+            this.parent = parent;
             this.items = items;
             if(this.items == null)
                 this.items = new Item[0];
@@ -61,6 +67,10 @@ public class EnchanterSlot extends Slot {
                     return true;
 
             return false;
+        }
+
+        public Type getParent() {
+            return parent;
         }
     }
 }

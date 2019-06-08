@@ -25,7 +25,7 @@ public class EnchanterSlot extends Slot {
     }
 
     public enum Type {
-        WAND(Items.STICK, Items.AIR),
+        WAND(de.gerolmed.wandustry.Items.ITEM_WAND, Items.AIR),
 
         TYPE_1(WAND, Items.NETHER_STAR),
         MOD_1_1(TYPE_1, Items.STONE, Items.AIR),

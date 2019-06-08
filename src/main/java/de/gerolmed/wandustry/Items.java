@@ -15,6 +15,7 @@ public class Items {
     public static final ItemRubyShard ITEM_RUBY_SHARD = new ItemRubyShard();
     public static final ItemEmeraldShard ITEM_EMERALD_SHARD = new ItemEmeraldShard();
     public static final ItemSapphireShard ITEM_SAPPHIRE_SHARD = new ItemSapphireShard();
+    public static final ItemWand ITEM_WAND = new ItemWand();
 
     public static BasicItem[] values() {
         return new BasicItem[] {
@@ -25,7 +26,8 @@ public class Items {
                 ITEM_MAGIC_DIAMOND,
                 ITEM_RUBY_SHARD,
                 ITEM_EMERALD_SHARD,
-                ITEM_SAPPHIRE_SHARD
+                ITEM_SAPPHIRE_SHARD,
+                ITEM_WAND
         };
     }
 }

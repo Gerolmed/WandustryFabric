@@ -1,5 +1,7 @@
 package de.gerolmed.wandustry.block.container;
 
+import de.gerolmed.wandustry.Items;
+import de.gerolmed.wandustry.item.ItemWand;
 import de.gerolmed.wandustry.utils.inventory.EnchanterSlot;
 import net.minecraft.container.Container;
 import net.minecraft.container.Slot;
@@ -167,6 +169,15 @@ public class WandEditContainer extends Container {
      * @param itemStack the value to read to
      */
     private void pop(ItemStack itemStack) {
+
+        ItemWand.WandData wandData = new ItemWand.WandData();
+
+        wandData.setHasType1(!inventory.getInvStack(1).isEmpty());
+        wandData.setHasType2(!inventory.getInvStack(6).isEmpty());
+        wandData.setHasType3(!inventory.getInvStack(11).isEmpty());
+
+        Items.ITEM_WAND.writeData(itemStack, wandData);
+
         for(int i = 1; i < inventory.getInvSize(); i++) {
             inventory.setInvStack(i, ItemStack.EMPTY);
         }
@@ -178,6 +189,10 @@ public class WandEditContainer extends Container {
      * @param itemStack the value to read from
      */
     private void push(ItemStack itemStack) {
+        ItemWand.WandData wandData = Items.ITEM_WAND.readData(itemStack);
+
+        if(wandData.isHasType1())
+            inventory.setInvStack(1, new ItemStack(net.minecraft.item.Items.NETHER_STAR));
     }
 
     @Override
